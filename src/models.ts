@@ -22,15 +22,19 @@ export interface ListDocumentsResult {
     limit: number;
 }
 
+export interface AnswerPassage {
+    passage: string;
+    start: number;
+    end: number;
+}
+
 export interface SearchResult {
     id: string;
     score: number;
     text: string;
     metadata: Metadata;
     vector?: Vector;
-    answerPassage?: string;
-    answerPassageStart?: number;
-    answerPassageEnd?: number;
+    answer?: AnswerPassage;
 }
 
 export interface SearchResponse {

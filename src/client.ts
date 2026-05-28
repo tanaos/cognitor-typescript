@@ -7,6 +7,7 @@ import {
     ValidationError,
 } from "./exceptions.js";
 import {
+    AnswerPassage,
     Collection,
     CompactionResult,
     Document,
@@ -31,9 +32,7 @@ interface SearchResultWire {
     text: string;
     metadata: Metadata;
     vector?: Vector;
-    answer_passage?: string;
-    answer_passage_start?: number;
-    answer_passage_end?: number;
+    answer?: AnswerPassage;
 }
 
 interface SearchResponseWire {
@@ -299,9 +298,7 @@ export class Cognitor {
             text: result.text,
             metadata: result.metadata,
             vector: result.vector,
-            answerPassage: result.answer_passage,
-            answerPassageStart: result.answer_passage_start,
-            answerPassageEnd: result.answer_passage_end,
+            answer: result.answer,
         };
     }
 

@@ -8,6 +8,7 @@ export {
     ValidationError,
 } from "./exceptions.js";
 export type {
+    AnswerPassage,
     Collection,
     CompactionResult,
     Document,
