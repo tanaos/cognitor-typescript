@@ -67,12 +67,16 @@ export class Cognitor {
             this.headers.set("Authorization", `Bearer ${options.apiKey}`);
         }
         this.timeoutMs = (options.timeout ?? 30) * 1000;
-        this.fetchFn = options.fetchImpl ?? fetch;
+        this.fetchFn = (options.fetchImpl ?? fetch).bind(globalThis);
     }
 
     close(): void {
         // Kept for parity with the Python SDK. No explicit teardown is required for fetch.
     }
+
+    // ------------------------------------------------------------------
+    // Base
+    // ------------------------------------------------------------------
 
     async ping(): Promise<string> {
         const response = await this.request("/");
@@ -90,6 +94,10 @@ export class Cognitor {
         await this.raiseForStatus(response);
         return "loading";
     }
+
+    // ------------------------------------------------------------------
+    // Collections
+    // ------------------------------------------------------------------
 
     async listCollections(): Promise<Collection[]> {
         const response = await this.request("/collections");
@@ -123,6 +131,10 @@ export class Cognitor {
     async deleteCollection(name: string): Promise<void> {
         await this.request(`/collections/${encodeURIComponent(name)}`, { method: "DELETE" });
     }
+
+    // ------------------------------------------------------------------
+    // Documents
+    // ------------------------------------------------------------------
 
     async addDocuments(
         collection: string,
@@ -221,6 +233,10 @@ export class Cognitor {
         return (await response.json()) as Document;
     }
 
+    // ------------------------------------------------------------------
+    // Search
+    // ------------------------------------------------------------------
+
     async search(
         collection: string,
         options: {
@@ -265,6 +281,10 @@ export class Cognitor {
         };
     }
 
+    // ------------------------------------------------------------------
+    // Admin
+    // ------------------------------------------------------------------
+
     async compact(collection: string): Promise<CompactionResult> {
         const response = await this.request(
             `/admin/collections/${encodeURIComponent(collection)}/compact`,
@@ -272,6 +292,32 @@ export class Cognitor {
         );
         return this.mapCompactionResult((await response.json()) as CompactionResultWire);
     }
+
+    // ------------------------------------------------------------------
+    // Base
+    // ------------------------------------------------------------------
+
+    async register(username: string, password: string): Promise<string> {
+        const response = await this.request("/auth/register", {
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+        });
+        const data = (await response.json()) as { api_key: string };
+        return data.api_key;
+    }
+
+    async login(username: string, password: string): Promise<string> {
+        const response = await this.request("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+        });
+        const data = (await response.json()) as { api_key: string };
+        return data.api_key;
+    }
+
+    // ------------------------------------------------------------------
+    // Helpers
+    // ------------------------------------------------------------------
 
     private mapCollection(collection: CollectionWire): Collection {
         return {
