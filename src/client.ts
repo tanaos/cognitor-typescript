@@ -245,6 +245,8 @@ export class Cognitor {
             topK?: number;
             filters?: Metadata;
             includeVectors?: boolean;
+            performExtractiveQA?: boolean;
+            performReranking?: boolean;
         } = {},
     ): Promise<SearchResponse> {
         const body: {
@@ -253,9 +255,13 @@ export class Cognitor {
             query_text?: string;
             query_vector?: Vector;
             filters?: Metadata;
+            perform_extractive_qa?: boolean;
+            perform_reranking?: boolean;
         } = {
-            top_k: options.topK ?? 10,
+            top_k: options.topK ?? 5,
             include_vectors: options.includeVectors ?? false,
+            perform_extractive_qa: options.performExtractiveQA ?? true,
+            perform_reranking: options.performReranking ?? true,
         };
         if (options.queryText !== undefined) {
             body.query_text = options.queryText;
