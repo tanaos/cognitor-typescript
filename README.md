@@ -153,9 +153,3 @@ const apiKey = await client.register("username", "password");
 // Login and obtain an API key
 const newApiKey = await client.login("username", "password");
 ```
-
-## Connection management
-
-Unlike the Python SDK, the TypeScript client does not need explicit connection teardown for HTTP resources.
-The `close()` method exists for parity and currently performs no action.
-
