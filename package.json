@@ -1,7 +1,9 @@
 {
-  "name": "cognitor-typescript",
+  "name": "cognitor",
   "version": "0.1.0",
-  "description": "TypeScript client for the Cognitor vector store API",
+  "description": "TypeScript SDK for the Cognitor search platform API.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Riccardo Lucato <riccardo@tanaos.com>",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -14,9 +16,24 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanaos/cognitor-typescript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tanaos/cognitor-typescript/issues"
+  },
+  "homepage": "https://github.com/tanaos/cognitor-typescript#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
     "typescript": "^5.8.3"
