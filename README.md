@@ -1,3 +1,9 @@
+<p align="center">
+    <a href="https://github.com/tanaos/cognitor">
+        <img src="https://raw.githubusercontent.com/tanaos/cognitor/master/assets/banner.png" width="90%" alt="Cognitor | All-in-one semantic search engine for AI and humans.">
+    </a>
+</p>
+
 # cognitor-typescript
 
 TypeScript SDK for [Cognitor](https://github.com/tanaos/cognitor).
