@@ -322,6 +322,38 @@ export class Cognitor {
     }
 
     // ------------------------------------------------------------------
+    // Worker
+    // ------------------------------------------------------------------
+
+    async setWorkerFolder(folderPath: string): Promise<Record<string, unknown>> {
+        const response = await this.request("/worker/folder", {
+            method: "POST",
+            body: JSON.stringify({ folder_path: folderPath }),
+        });
+        return (await response.json()) as Record<string, unknown>;
+    }
+
+    async getWorkerFolder(): Promise<Record<string, unknown>> {
+        const response = await this.request("/worker/folder");
+        return (await response.json()) as Record<string, unknown>;
+    }
+
+    async clearWorkerFolder(): Promise<Record<string, unknown>> {
+        const response = await this.request("/worker/folder", { method: "DELETE" });
+        return (await response.json()) as Record<string, unknown>;
+    }
+
+    async triggerReindex(): Promise<Record<string, unknown>> {
+        const response = await this.request("/worker/reindex", { method: "POST" });
+        return (await response.json()) as Record<string, unknown>;
+    }
+
+    async getIndexingStatus(): Promise<Record<string, unknown>> {
+        const response = await this.request("/worker/indexing-status");
+        return (await response.json()) as Record<string, unknown>;
+    }
+
+    // ------------------------------------------------------------------
     // Helpers
     // ------------------------------------------------------------------
 
