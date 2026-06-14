@@ -1,4 +1,4 @@
-## Release v0.2.0 - TBD
+## Release v0.2.0 - June 14, 2026
 
 ### Added
 
