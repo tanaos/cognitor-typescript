@@ -15,6 +15,7 @@ import {
     Metadata,
     SearchResponse,
     SearchResult,
+    Status,
     Vector,
 } from "./models.js";
 
@@ -52,6 +53,12 @@ interface CompactionResultWire {
     vectors_before: number;
     live_count: number;
     deleted_count: number;
+}
+
+interface StatusWire {
+    indexing: boolean;
+    removal: boolean;
+    compaction: boolean;
 }
 
 export class Cognitor {
@@ -93,6 +100,11 @@ export class Cognitor {
         }
         await this.raiseForStatus(response);
         return "loading";
+    }
+
+    async status(): Promise<Status> {
+        const response = await this.request("/status");
+        return this.mapStatus((await response.json()) as StatusWire);
     }
 
     // ------------------------------------------------------------------
@@ -372,6 +384,14 @@ export class Cognitor {
             vectorsBefore: result.vectors_before,
             liveCount: result.live_count,
             deletedCount: result.deleted_count,
+        };
+    }
+
+    private mapStatus(status: StatusWire): Status {
+        return {
+            indexing: status.indexing,
+            removal: status.removal,
+            compaction: status.compaction,
         };
     }
 

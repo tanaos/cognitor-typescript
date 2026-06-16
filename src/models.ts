@@ -48,3 +48,9 @@ export interface CompactionResult {
     liveCount: number;
     deletedCount: number;
 }
+
+export interface Status {
+    indexing: boolean;
+    removal: boolean;
+    compaction: boolean;
+}

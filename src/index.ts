@@ -16,5 +16,6 @@ export type {
     Metadata,
     SearchResponse,
     SearchResult,
+    Status,
     Vector,
 } from "./models.js";
